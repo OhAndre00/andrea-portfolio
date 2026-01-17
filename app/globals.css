@@ -1,8 +1,20 @@
 @import "tailwindcss";
-
+@import "@fontsource/geist/400.css";
+@import "@fontsource/geist/500.css";
+@import "@fontsource/geist/700.css";
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --purple-neon: #b048ff;
+  --purple-deep: #6d24ff;
+  --blue-neon: #4df0ff;
+  --green-neon: #3dffcf;
+  --bg-dark: #030014;
+  --text-glow: 0 0 12px var(--purple-neon);
+  --purple-neon-strong: #d867ff;
+  --blue-neon: #4df0ff;
+  --teal-neon: #2affd3;
+
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.08);
 }
 
 @theme inline {
@@ -23,4 +35,36 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Ottimizzazione per JetBrains Mono */
+:root {
+  --font-jetbrains-mono: ${jetbrainsMono.style.fontFamily};
+}
+
+/* Forza l'uso del font su tutti gli elementi */
+* {
+  font-feature-settings:
+    "calt" 1,
+    "ss01" 1,
+    "ss02" 1,
+    "ss03" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Per elementi che potrebbero ignorare l'eredità */
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+}
+
+/* Classe helper per uso esplicito */
+.font-mono {
+  font-family:
+    var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, monospace;
 }
