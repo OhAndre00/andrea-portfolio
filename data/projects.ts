@@ -17,7 +17,7 @@ export const projects = [
   },
   {
     title: "OOBE Protocol",
-    image: "/images/oobe.PNG",
+    image: "/images/oobe.png",
     alt: "OOBE Protocol Preview",
     description:
       "A decentralized protocol for secure and efficient blockchain operations. Designed for performance, composability and seamless Web3 integrations.",
