@@ -96,6 +96,8 @@ export default function About() {
             "MongoDB",
             "PostgreSQL",
             "Tailwind CSS",
+            "Docker",
+            "Web3.js",
           ].map((tech) => (
             <span
               key={tech}

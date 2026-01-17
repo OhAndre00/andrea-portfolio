@@ -18,14 +18,44 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
 });
 
+function useSafeViewportHeight(limit = 700) {
+  const [isLow, setIsLow] = useState(false);
+
+  useEffect(() => {
+    const check = () => {
+      setIsLow(window.innerHeight < limit);
+    };
+
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, [limit]);
+
+  return isLow;
+}
+
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const { scrollYProgress } = useScroll();
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, 100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const isLowHeight = useSafeViewportHeight();
+
+  const y = useTransform(
+    scrollYProgress,
+    [0, 1],
+    isLowHeight ? [0, 20] : [0, 60],
+  );
+
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.5],
+    isLowHeight ? [1, 1] : [1, 0],
+  );
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -39,7 +69,7 @@ export default function Home() {
   return (
     <div
       ref={containerRef}
-      className="relative min-h-screen bg-dark overflow-hidden"
+      className="relative min-h-screen bg-dark"
       style={{ fontFamily: jetbrainsMono.style.fontFamily }}
     >
       {/* Cursor glow effect */}
@@ -58,8 +88,16 @@ export default function Home() {
       {/* Main content */}
       <motion.section
         ref={heroRef}
-        style={{ y, opacity }}
-        className="h-screen relative flex items-center justify-center px-4 sm:px-6"
+        style={!isLowHeight ? { y, opacity } : undefined}
+        className="
+    relative
+    min-h-screen
+    flex
+    items-center
+    justify-center
+    px-4 sm:px-6
+    py-24
+  "
       >
         <div className="max-w-6xl w-full text-center relative z-10">
           <motion.div
@@ -82,7 +120,7 @@ export default function Home() {
                   width={200}
                   height={200}
                   alt="Andrea Icon"
-                  className="rounded-full object-cover w-[160px] h-[160px] sm:w-[180px] sm:h-[180px] md:w-[200px] md:h-[200px]"
+                  className="rounded-full cursor-pointer object-cover w-[160px] h-[160px] sm:w-[180px] sm:h-[180px] md:w-[200px] md:h-[200px]"
                   priority
                 />
               </div>
@@ -98,7 +136,7 @@ export default function Home() {
           >
             <div className="relative mb-6 md:mb-8">
               <h1
-                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-tight"
+                className="cursor-default text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-tight"
                 style={{
                   fontFamily: jetbrainsMono.style.fontFamily,
                   background:
@@ -116,7 +154,7 @@ export default function Home() {
 
             {/* Tagline */}
             <motion.p
-              className="text-lg sm:text-xl md:text-2xl font-light px-4"
+              className="text-lg cursor-default sm:text-xl md:text-2xl font-light px-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
@@ -209,27 +247,20 @@ export default function Home() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 z-20">
-          <motion.div
-            className="flex flex-col items-center"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            style={{ fontFamily: jetbrainsMono.style.fontFamily }}
-          >
-            <span
-              className="text-xs sm:text-sm font-light mb-1"
-              style={{
-                fontFamily: jetbrainsMono.style.fontFamily,
-                color: "rgba(156, 163, 175, 0.6)",
-                letterSpacing: "0.15em",
-                fontWeight: 300,
-              }}
+        {!isLowHeight && (
+          <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 z-20">
+            <motion.div
+              className="flex flex-col items-center"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             >
-              SCROLL
-            </span>
-            <div className="w-px h-12 sm:h-16 bg-gradient-to-b from-purple-500/50 via-purple-400/30 to-transparent" />
-          </motion.div>
-        </div>
+              <span className="text-xs cursor-default sm:text-sm font-light mb-1">
+                SCROLL
+              </span>
+              <div className="w-px h-12 sm:h-16 bg-gradient-to-b from-purple-500/50 via-purple-400/30 to-transparent" />
+            </motion.div>
+          </div>
+        )}
       </motion.section>
 
       <About />
