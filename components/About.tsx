@@ -13,7 +13,7 @@ export default function About() {
       {/* Background subtle gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-dark/50 to-dark z-0" />
 
-      {/* Content Container - Centrato verticalmente */}
+      {/* Content Container */}
       <div className="max-w-4xl mx-auto w-full relative z-10 py-8 sm:py-12">
         {/* Title Section */}
         <motion.div
@@ -111,7 +111,7 @@ export default function About() {
           ))}
         </motion.div>
 
-        {/* Buttons - Centered */}
+        {/* Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -119,7 +119,6 @@ export default function About() {
           transition={{ delay: 0.4 }}
           className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-5 md:gap-6 px-2"
         >
-          {/* View Projects Button */}
           <motion.button
             onClick={() => {
               document.querySelector("#projects")?.scrollIntoView({
@@ -136,7 +135,7 @@ export default function About() {
               maxWidth: "280px",
             }}
           >
-            {/* Background gradient sottile */}
+            {/* Background gradient */}
             <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-r from-purple-500/10 to-blue-500/10" />
 
             {/* Border gradient */}
@@ -145,7 +144,6 @@ export default function About() {
             {/* Inner shadow */}
             <div className="absolute inset-0 rounded-xl sm:rounded-2xl shadow-inner shadow-black/20" />
 
-            {/* Testo */}
             <span className="relative z-10 text-white flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base">
               VIEW PROJECTS
               <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
@@ -155,7 +153,6 @@ export default function About() {
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-purple-500/5 to-blue-500/5" />
           </motion.button>
 
-          {/* Download CV Button */}
           <motion.a
             href="/MyCV.pdf"
             download
@@ -168,7 +165,7 @@ export default function About() {
               maxWidth: "280px",
             }}
           >
-            {/* Background gradient sottile */}
+            {/* Background gradient */}
             <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-r from-purple-500/10 to-blue-500/10" />
 
             {/* Border gradient */}
@@ -177,7 +174,6 @@ export default function About() {
             {/* Inner shadow */}
             <div className="absolute inset-0 rounded-xl sm:rounded-2xl shadow-inner shadow-black/20" />
 
-            {/* Testo */}
             <span className="relative z-10 text-white flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base">
               DOWNLOAD CV
               <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />

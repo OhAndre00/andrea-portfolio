@@ -91,12 +91,12 @@ export default function TechCubesBackground() {
     );
 
     const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.035, // ⭐ AUMENTATO da 0.03 a 0.045 (50% più grandi)
-      color: 0xa855f7, // ⭐ COLORE PIÙ CHIARO (da 0x8b5cf6 a 0xa855f7)
+      size: 0.035,
+      color: 0xa855f7,
       transparent: true,
-      opacity: 0.7, // ⭐ AUMENTATO da 0.5 a 0.7 (40% più visibili)
+      opacity: 0.7,
       blending: THREE.AdditiveBlending,
-      sizeAttenuation: true, // ⭐ Aggiunto per dimensione prospettica
+      sizeAttenuation: true,
     });
 
     const particlesMesh = new THREE.Points(
@@ -132,7 +132,7 @@ export default function TechCubesBackground() {
       currentMouseX += (targetMouseX - currentMouseX) * 0.03;
       currentMouseY += (targetMouseY - currentMouseY) * 0.03;
 
-      // Animate cubes
+      // Animated cubes
       cubes.forEach((cube, i) => {
         const data = cube.userData;
 
@@ -151,11 +151,9 @@ export default function TechCubesBackground() {
           0.08 + Math.sin(elapsedTime * 1.5 + i) * 0.04;
       });
 
-      // Animazione particelle più evidente
       particlesMesh.rotation.x = elapsedTime * 0.01; // ⭐ Più lento
       particlesMesh.rotation.y = elapsedTime * 0.015; // ⭐ Più lento
 
-      // Leggera oscillazione delle particelle per più vita
       const positions = particlesGeometry.attributes.position
         .array as Float32Array;
       for (let i = 0; i < particlesCount * 3; i += 3) {
@@ -218,7 +216,6 @@ export default function TechCubesBackground() {
         ref={mountRef}
         className="fixed inset-0 -z-10 pointer-events-none opacity-70"
       />
-      {/* ⭐ Aumentata opacità da 0.6 a 0.7 */}
     </>
   );
 }

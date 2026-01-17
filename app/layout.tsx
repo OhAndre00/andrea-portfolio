@@ -4,7 +4,6 @@ import GradientMeshBackground from "@/components/GradientMeshBackground";
 import BackToTop from "@/components/BackToTop";
 import { JetBrains_Mono } from "next/font/google";
 
-// Configura JetBrains Mono
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
@@ -37,7 +36,7 @@ export default function RootLayout({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-        {/* Preconnect per performance */}
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -51,7 +50,6 @@ export default function RootLayout({
 
         <main className="relative z-10">{children}</main>
 
-        {/* Performance optimization script */}
         <script
           dangerouslySetInnerHTML={{
             __html: `

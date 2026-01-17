@@ -13,7 +13,6 @@ import About from "@/components/About";
 import Projects from "@/components/Projects";
 import { JetBrains_Mono } from "next/font/google";
 
-// Configura JetBrains Mono
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
@@ -43,7 +42,7 @@ export default function Home() {
       className="relative min-h-screen bg-dark overflow-hidden"
       style={{ fontFamily: jetbrainsMono.style.fontFamily }}
     >
-      {/* Cursor glow effect ONLY */}
+      {/* Cursor glow effect */}
       <motion.div
         className="fixed -z-10 w-[400px] h-[400px] rounded-full pointer-events-none"
         animate={{ x: mousePosition.x - 200, y: mousePosition.y - 200 }}
@@ -63,7 +62,6 @@ export default function Home() {
         className="h-screen relative flex items-center justify-center px-4 sm:px-6"
       >
         <div className="max-w-6xl w-full text-center relative z-10">
-          {/* Logo con outline - spazio bilanciato */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -91,14 +89,13 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* Title - ANDREA moderno */}
+          {/* Title */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-12 md:mb-16"
           >
-            {/* Titolo ANDREA moderno con gradient e font JetBrains Mono */}
             <div className="relative mb-6 md:mb-8">
               <h1
                 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-tight"
@@ -117,7 +114,7 @@ export default function Home() {
               </h1>
             </div>
 
-            {/* Tagline sottostante - spaziature migliorate */}
+            {/* Tagline */}
             <motion.p
               className="text-lg sm:text-xl md:text-2xl font-light px-4"
               initial={{ opacity: 0 }}
@@ -135,7 +132,7 @@ export default function Home() {
             </motion.p>
           </motion.div>
 
-          {/* Social buttons - spazio bilanciato */}
+          {/* Social buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -168,7 +165,7 @@ export default function Home() {
             />
           </motion.div>
 
-          {/* CTA Button - spazio sopra migliorato */}
+          {/* CTA Button */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -191,7 +188,7 @@ export default function Home() {
                 fontWeight: 500,
               }}
             >
-              {/* Background gradient sottile */}
+              {/* Background gradient */}
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/10 to-blue-500/10" />
 
               {/* Border gradient */}
@@ -200,7 +197,6 @@ export default function Home() {
               {/* Inner shadow */}
               <div className="absolute inset-0 rounded-2xl shadow-inner shadow-black/20" />
 
-              {/* Testo */}
               <span className="relative z-10 text-white flex items-center justify-center gap-3 text-base sm:text-lg">
                 EXPLORE MY JOURNEY
                 <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -212,7 +208,7 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* Scroll Indicator - posizionato FUORI dal container principale */}
+        {/* Scroll Indicator */}
         <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 z-20">
           <motion.div
             className="flex flex-col items-center"
@@ -276,12 +272,12 @@ function SocialButton({
       className="relative group"
       style={{ fontFamily: jetbrainsMono.style.fontFamily }}
     >
-      {/* Background glow - solo su hover */}
+      {/* Background glow */}
       <div
         className={`absolute inset-0 rounded-full bg-gradient-to-br ${color} group-hover:${hoverColor} transition-all duration-300 blur-md`}
       />
 
-      {/* Bottone principale */}
+      {/* Button */}
       <div
         className={`
         relative w-14 h-14 sm:w-16 sm:h-16 rounded-full backdrop-blur-lg

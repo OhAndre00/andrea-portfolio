@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 import { JetBrains_Mono } from "next/font/google";
 
-// Font per coerenza
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
@@ -15,7 +14,7 @@ export default function BackToTop() {
   const [visible, setVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Detect mobile once
+  // Detect mobile
   useEffect(() => {
     setIsMobile(window.innerWidth < 768);
   }, []);
@@ -32,7 +31,7 @@ export default function BackToTop() {
         setVisible(rect.bottom < window.innerHeight * 0.3);
       } else {
         // DESKTOP → normal behavior
-        setVisible(window.scrollY > 300); // Aumentato da 250 a 300
+        setVisible(window.scrollY > 300);
       }
     };
 

@@ -37,12 +37,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Ottimizzazione per JetBrains Mono */
 :root {
   --font-jetbrains-mono: ${jetbrainsMono.style.fontFamily};
 }
 
-/* Forza l'uso del font su tutti gli elementi */
 * {
   font-feature-settings:
     "calt" 1,
@@ -54,7 +52,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Per elementi che potrebbero ignorare l'eredità */
 input,
 textarea,
 select,
@@ -62,7 +59,6 @@ button {
   font-family: inherit;
 }
 
-/* Classe helper per uso esplicito */
 .font-mono {
   font-family:
     var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
