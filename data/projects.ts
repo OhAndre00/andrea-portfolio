@@ -1,7 +1,7 @@
 export const projects = [
   {
     title: "Synapse",
-    image: "/synapse.png",
+    image: "/images/synapse.png",
     alt: "Synapse Preview",
     description:
       "A Web3 platform built around Solana and blockchain. Focused on advanced analytics, real-time data visualization and seamless on-chain integration.",
@@ -17,7 +17,7 @@ export const projects = [
   },
   {
     title: "OOBE Protocol",
-    image: "/oobe.PNG",
+    image: "/images/oobe.PNG",
     alt: "OOBE Protocol Preview",
     description:
       "A decentralized protocol for secure and efficient blockchain operations. Designed for performance, composability and seamless Web3 integrations.",

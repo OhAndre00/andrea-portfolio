@@ -1,22 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // CONFIGURAZIONE BASE - NIENTE 'experimental'
   reactStrictMode: true,
+  output: "export", // Tienilo se vuoi sito statico
 
-  // RIMUOVI 'output: export' se usi:
-  // - API Routes (/api/*)
-  // - Server Components
-  // - getServerSideProps / getStaticProps con revalidate
-  output: "export",
-
+  // CONFIGURAZIONE IMMAGINI PER SITI STATICI
   images: {
-    unoptimized: true,
+    unoptimized: true, // ESSENZIALE per output: 'export'
+    // Configura anche i domini se usi immagini esterne
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**", // Permetti tutte le immagini esterne
+      },
+    ],
   },
 
-  // Aggiungi solo se necessario
-  // trailingSlash: true,
-  // basePath: '',
-  // assetPrefix: '',
+  // Aggiungi se usi immagini in `public/` con path complessi
+  trailingSlash: true, // Opzionale, aiuta con alcuni path
 };
 
 module.exports = nextConfig;
