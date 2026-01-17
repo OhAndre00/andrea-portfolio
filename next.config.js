@@ -1,17 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Rimuovi completamente la sezione 'experimental' o correggila
-  // Per disabilitare Turbopack in produzione, non usare 'turbo'
+  // CONFIGURAZIONE BASE - NIENTE 'experimental'
+  reactStrictMode: true,
 
-  // Se il tuo sito è completamente statico:
+  // RIMUOVI 'output: export' se usi:
+  // - API Routes (/api/*)
+  // - Server Components
+  // - getServerSideProps / getStaticProps con revalidate
   output: "export",
 
-  // Se usi immagini:
   images: {
-    unoptimized: true, // Necessario per 'output: export'
+    unoptimized: true,
   },
 
-  // Altre configurazioni se necessario...
+  // Aggiungi solo se necessario
+  // trailingSlash: true,
+  // basePath: '',
+  // assetPrefix: '',
 };
 
 module.exports = nextConfig;
