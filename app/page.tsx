@@ -12,6 +12,7 @@ import Image from "next/image";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
 import { JetBrains_Mono } from "next/font/google";
+import ContactSection from "@/components/ContactSection";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -265,6 +266,7 @@ export default function Home() {
 
       <About />
       <Projects />
+      <ContactSection />
     </div>
   );
 }

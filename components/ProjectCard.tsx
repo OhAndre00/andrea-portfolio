@@ -26,7 +26,7 @@ export function ProjectCard({
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      animate={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.5, delay }}
       className="flex flex-col"
@@ -42,7 +42,7 @@ export function ProjectCard({
     transition-all duration-300"
       >
         {/* IMAGE */}
-        <div className="relative h-48 sm:h-56 overflow-hidden">
+        <div className="relative h-40 sm:h-56 overflow-hidden">
           <Image
             src={image}
             alt={alt}
@@ -87,8 +87,8 @@ export function ProjectCard({
               whileTap={{ scale: 0.97 }}
               className="inline-flex items-center justify-start gap-2
       w-full px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold text-white
-      bg-purple-500/25 backdrop-blur-sm
-      hover:bg-purple-500/40
+      bg-purple-500/40 backdrop-blur-sm
+      hover:bg-purple-500/50
       transition-colors transition-transform duration-300
       text-sm sm:text-base cursor-pointer"
             >

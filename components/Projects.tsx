@@ -9,7 +9,7 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="min-h-screen flex flex-col justify-center px-4 sm:px-6 py-12 relative overflow-hidden"
+      className="min-h-screen flex flex-col justify-start md:justify-center px-4 sm:px-6 py-8 relative overflow-hidden"
     >
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-dark/50 to-dark" />
 
@@ -17,10 +17,9 @@ export default function Projects() {
         {/* TITLE */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-10"
+          className="text-center mb-8"
         >
           <h2
             className="text-4xl sm:text-5xl md:text-6xl font-black mb-4 sm:mb-5"
@@ -55,9 +54,7 @@ export default function Projects() {
         {/* FOOTER */}
         <motion.p
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
+          animate={{ opacity: 1 }}
           className="mt-10 text-center text-gray-500/70 text-sm"
         >
           More projects coming soon ✦
