@@ -17,6 +17,23 @@
   --card-border: rgba(255, 255, 255, 0.08);
 }
 
+/* Aggiungi nel tuo globals.css o come CSS-in-JS */
+@media (max-height: 700px) {
+  .compact-hero {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+  .compact-hero .profile-image {
+    width: 120px !important;
+    height: 120px !important;
+  }
+  .compact-hero h1 {
+    font-size: 2.5rem !important;
+  }
+  .compact-hero .tagline {
+    font-size: 0.875rem !important;
+  }
+}
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

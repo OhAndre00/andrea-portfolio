@@ -116,9 +116,9 @@ export default function About() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
-          className="flex flex-col items-center gap-4 sm:gap-5 md:gap-6 px-2"
+          className="flex flex-col items-center gap-4 sm:gap-5 md:gap-6 px-2 w-full"
         >
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-5 md:gap-6">
+          <div className="flex flex-col sm:flex-row justify-center items-stretch gap-4 sm:gap-5 md:gap-6 w-full sm:w-auto">
             <motion.button
               onClick={() => {
                 document.querySelector("#projects")?.scrollIntoView({
@@ -128,11 +128,10 @@ export default function About() {
               }}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              className="group relative px-7 sm:px-8 md:px-9 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl cursor-pointer font-semibold overflow-hidden transition-all duration-300 w-full sm:w-auto"
+              className="group relative px-7 sm:px-8 md:px-9 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl cursor-pointer font-semibold overflow-hidden transition-all duration-300 w-full sm:flex-1 min-w-0"
               style={{
                 letterSpacing: "0.08em",
                 fontWeight: 500,
-                maxWidth: "280px",
               }}
             >
               {/* Background gradient */}
@@ -153,16 +152,19 @@ export default function About() {
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-purple-500/5 to-blue-500/5" />
             </motion.button>
 
-            <motion.a
-              href="/MyCV.pdf"
-              download
+            <motion.button
+              onClick={() => {
+                document.querySelector("#contact")?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              className="group relative px-7 sm:px-8 md:px-9 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl cursor-pointer font-semibold overflow-hidden transition-all duration-300 w-full sm:w-auto"
+              className="group relative px-7 sm:px-8 md:px-9 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl cursor-pointer font-semibold overflow-hidden transition-all duration-300 w-full sm:flex-1 min-w-0"
               style={{
                 letterSpacing: "0.08em",
                 fontWeight: 500,
-                maxWidth: "280px",
               }}
             >
               {/* Background gradient */}
@@ -175,42 +177,6 @@ export default function About() {
               <div className="absolute inset-0 rounded-xl sm:rounded-2xl shadow-inner shadow-black/20" />
 
               <span className="relative z-10 text-white flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base">
-                DOWNLOAD CV
-                <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
-              </span>
-
-              {/* Hover effect */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-purple-500/5 to-blue-500/5" />
-            </motion.a>
-          </div>
-
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-5 md:gap-6">
-            <motion.button
-              onClick={() => {
-                document.querySelector("#contact")?.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start",
-                });
-              }}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="group relative px-7 sm:px-8 md:px-9 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl cursor-pointer font-semibold overflow-hidden transition-all duration-300 w-full sm:w-auto"
-              style={{
-                letterSpacing: "0.08em",
-                fontWeight: 500,
-                maxWidth: "280px",
-              }}
-            >
-              {/* Background gradient */}
-              <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-r from-purple-500/10 to-blue-500/10" />
-
-              {/* Border gradient */}
-              <div className="absolute inset-0 rounded-xl sm:rounded-2xl border border-purple-500/30 group-hover:border-purple-400/50 transition-all duration-300" />
-
-              {/* Inner shadow */}
-              <div className="absolute inset-0 rounded-xl sm:rounded-2xl shadow-inner shadow-black/20" />
-
-              <span className="relative z-10 w-full text-white flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base md:text-base">
                 CONTACT ME
                 <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
               </span>
