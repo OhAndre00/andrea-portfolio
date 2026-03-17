@@ -50,15 +50,6 @@ export default function Projects() {
             <ProjectCard key={project.title} {...project} delay={i * 0.1} />
           ))}
         </div>
-
-        {/* FOOTER */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="mt-10 text-center text-gray-500/70 text-sm"
-        >
-          More projects coming soon ✦
-        </motion.p>
       </div>
     </section>
   );
