@@ -267,7 +267,7 @@ export default function HeroSection({ isLowHeight }: HeroSectionProps) {
               delay={0}
             />
             <SocialButton
-              href="https://www.linkedin.com/in/andrea-marchese-979354253/"
+              href="https://www.linkedin.com/in/andrea-maria-seidita-9b513922b/"
               icon={<Linkedin />}
               color="from-blue-500/20 to-blue-600/20"
               hoverColor="from-blue-500/40 to-blue-600/40"

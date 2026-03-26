@@ -48,4 +48,21 @@ export const projects = [
     ],
     url: "https://www.dineoutdigital.com/",
   },
+  {
+    title: "GestioMed",
+    image: "/images/gestiomed.png",
+    alt: "GestioMed Preview",
+    description:
+      "Complete medical practice management system. Full-stack application handling patient records, appointments, prescriptions, and medical history with role-based access for doctors, staff, and administrators.",
+    tech: [
+      "React",
+      "Node.js",
+      "Python",
+      "PostgreSQL",
+      "JWT",
+      "Tailwind CSS",
+      "REST API",
+    ],
+    url: "https://app.gestiomed.com/",
+  },
 ];

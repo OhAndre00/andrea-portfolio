@@ -80,37 +80,6 @@ export default function About() {
           </p>
         </motion.div>
 
-        {/* Tech Stack Tags */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-10 md:mb-12 px-2"
-        >
-          {[
-            "React/Next.js",
-            "TypeScript",
-            "Node.js",
-            "MongoDB",
-            "PostgreSQL",
-            "Tailwind CSS",
-            "Docker",
-            "Web3.js",
-          ].map((tech) => (
-            <span
-              key={tech}
-              className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-sm sm:text-base font-medium
-                       bg-white/5 border border-white/10
-                       text-gray-300 hover:text-white
-                       hover:border-purple-500/30 hover:bg-white/10
-                       transition-all duration-300 cursor-default
-                       backdrop-blur-sm"
-            >
-              {tech}
-            </span>
-          ))}
-        </motion.div>
-
         {/* Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
