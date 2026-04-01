@@ -30,12 +30,6 @@ export function ProjectCard({
 }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Limita la descrizione a 100 caratteri per mantenere le card uniformi
-  const truncatedDescription =
-    description.length > 100
-      ? `${description.substring(0, 100)}...`
-      : description;
-
   const projectData = { title, image, alt, description, tech, url };
 
   return (
@@ -45,85 +39,82 @@ export function ProjectCard({
         animate={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.5, delay }}
-        className="flex flex-col h-full"
+        className="w-full"
       >
-        {/* Rimuoviamo il tag <a> e usiamo un div con onClick per la card */}
         <div
           onClick={() => setIsModalOpen(true)}
-          className="group flex flex-col h-full rounded-xl overflow-hidden backdrop-blur-xl
+          className="group flex flex-col md:flex-row w-full rounded-xl overflow-hidden backdrop-blur-xl
             bg-white/5 border border-white/10
             shadow-[0_0_20px_rgba(139,92,246,0.1)]
             hover:border-purple-500/50
+            hover:shadow-[0_0_30px_rgba(139,92,246,0.2)]
             transition-all duration-300 cursor-pointer"
         >
-          {/* IMAGE */}
-          <div className="relative h-32 sm:h-40 overflow-hidden">
+          {/* IMAGE - su mobile sopra, su desktop a sinistra */}
+          <div className="relative md:w-2/5 lg:w-1/3 h-48 sm:h-56 md:h-auto min-h-[200px] overflow-hidden shrink-0">
             <Image
               src={image}
               alt={alt}
-              width={1000}
-              height={200}
+              fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, 400px"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/30 to-transparent md:bg-gradient-to-r md:from-dark/90 md:via-dark/30 md:to-transparent" />
 
             {/* Badge opzionale per progetto in evidenza */}
             {featured && (
-              <div className="absolute top-2 right-2 px-2 py-1 text-[10px] font-medium bg-purple-500/20 backdrop-blur-md border border-purple-500/30 rounded-full text-purple-300">
+              <div className="absolute top-3 right-3 px-2.5 py-1 text-xs font-medium bg-purple-500/20 backdrop-blur-md border border-purple-500/30 rounded-full text-purple-300 z-10">
                 Featured
               </div>
             )}
           </div>
 
           {/* CONTENT + STACK + CTA */}
-          <div className="flex flex-col flex-grow p-4 sm:p-5">
-            {/* Titolo e descrizione compatta */}
-            <div className="mb-3">
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-1.5 line-clamp-1">
+          <div className="flex flex-col flex-grow p-5 sm:p-6 md:p-8">
+            {/* Titolo */}
+            <div className="mb-3 md:mb-4">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 line-clamp-1">
                 {title}
               </h3>
-              <p className="text-gray-300/80 text-xs sm:text-sm leading-relaxed line-clamp-2">
-                {truncatedDescription}
+              <p className="text-gray-300/80 text-sm sm:text-base leading-relaxed line-clamp-2 md:line-clamp-3">
+                {description}
               </p>
             </div>
 
             {/* STACK */}
-            <div className="flex flex-wrap gap-1.5 mb-4">
-              {tech.slice(0, 4).map((item) => (
+            <div className="flex flex-wrap gap-2 mb-5 md:mb-6">
+              {tech.map((item) => (
                 <span
                   key={item}
-                  className="px-2 py-0.5 text-[10px] sm:text-xs rounded-full font-medium
+                  className="px-2.5 py-1 text-xs sm:text-sm rounded-full font-medium
                     bg-white/10 border border-white/15
                     text-gray-300
-                    transition-all duration-300"
+                    transition-all duration-300
+                    hover:bg-white/20 hover:border-white/30"
                 >
                   {item}
                 </span>
               ))}
-              {tech.length > 4 && (
-                <span className="px-2 py-0.5 text-[10px] sm:text-xs rounded-full font-medium bg-white/5 text-gray-400">
-                  +{tech.length - 4}
-                </span>
-              )}
             </div>
 
-            {/* CTA - evita la propagazione del click per non aprire il modal */}
+            {/* CTA */}
             <div className="mt-auto" onClick={(e) => e.stopPropagation()}>
               <a
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-between
-                  w-full px-4 py-2 rounded-lg font-medium text-white
+                  w-full md:w-auto md:min-w-[180px]
+                  px-5 py-2.5 rounded-lg font-medium text-white
                   bg-purple-600/90
                   hover:bg-purple-600
-                  transition-colors duration-300
-                  text-xs sm:text-sm"
+                  transition-all duration-300
+                  text-sm sm:text-base
+                  group/btn"
                 onClick={(e) => e.stopPropagation()}
               >
                 <span>View Project</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
+                <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
               </a>
             </div>
           </div>

@@ -33,22 +33,6 @@ export const projects = [
     url: "https://oobeprotocol.ai/",
   },
   {
-    title: "Dine Out Digital",
-    image: "/images/dineoutdigital.png",
-    alt: "DineOut Digital Preview",
-    description:
-      "As CTO, I lead the technical vision for this US platform transforming restaurants through integrated digital solutions and data-driven marketing.",
-    tech: [
-      "Web Development",
-      "Digital Marketing",
-      "SaaS",
-      "Restaurant Tech",
-      "UI/UX Design",
-      "E-commerce",
-    ],
-    url: "https://www.dineoutdigital.com/",
-  },
-  {
     title: "GestioMed",
     image: "/images/gestiomed.png",
     alt: "GestioMed Preview",
@@ -64,5 +48,21 @@ export const projects = [
       "REST API",
     ],
     url: "https://app.gestiomed.com/",
+  },
+  {
+    title: "Dine Out Digital",
+    image: "/images/dineoutdigital.png",
+    alt: "DineOut Digital Preview",
+    description:
+      "As CTO, I lead the technical vision for this US platform transforming restaurants through integrated digital solutions and data-driven marketing.",
+    tech: [
+      "Web Development",
+      "Digital Marketing",
+      "SaaS",
+      "Restaurant Tech",
+      "UI/UX Design",
+      "E-commerce",
+    ],
+    url: "https://www.dineoutdigital.com/",
   },
 ];

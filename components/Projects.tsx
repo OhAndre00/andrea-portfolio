@@ -44,8 +44,8 @@ export default function Projects() {
           <div className="h-[2px] w-32 mx-auto mt-5 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full" />
         </motion.div>
 
-        {/* GRID */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
+        {/* LIST - verticale su desktop, griglia su mobile? No, verticale su entrambi ma con card diversa */}
+        <div className="flex flex-col gap-8 md:gap-10">
           {projects.map((project, i) => (
             <ProjectCard key={project.title} {...project} delay={i * 0.1} />
           ))}
