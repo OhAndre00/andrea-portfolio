@@ -74,7 +74,7 @@ export default function HeroSection({ isLowHeight }: HeroSectionProps) {
       id="home"
       ref={heroRef}
       style={!isLowHeight ? { opacity } : undefined}
-      className="section-shell relative flex min-h-screen scroll-mt-24 items-center overflow-hidden px-4 py-16 sm:px-6 lg:px-8"
+      className="section-shell relative flex min-h-screen scroll-mt-24 items-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:py-16 lg:px-8"
     >
       <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-14 lg:grid-cols-[1.2fr_0.8fr]">
         <div>
