@@ -1,6 +1,7 @@
 export const projects = [
   {
     title: "Synapse",
+    category: "Web3 Analytics",
     image: "/images/synapse.png",
     alt: "Synapse Preview",
     description:
@@ -17,6 +18,7 @@ export const projects = [
   },
   {
     title: "OOBE Protocol",
+    category: "Protocol / Infrastructure",
     image: "/images/oobe.png",
     alt: "OOBE Protocol Preview",
     description:
@@ -34,6 +36,7 @@ export const projects = [
   },
   {
     title: "GestioMed",
+    category: "SaaS / Healthcare",
     image: "/images/gestiomed.png",
     alt: "GestioMed Preview",
     description:
@@ -48,21 +51,5 @@ export const projects = [
       "REST API",
     ],
     url: "https://app.gestiomed.com/",
-  },
-  {
-    title: "Dine Out Digital",
-    image: "/images/dineoutdigital.png",
-    alt: "DineOut Digital Preview",
-    description:
-      "As CTO, I lead the technical vision for this US platform transforming restaurants through integrated digital solutions and data-driven marketing.",
-    tech: [
-      "Web Development",
-      "Digital Marketing",
-      "SaaS",
-      "Restaurant Tech",
-      "UI/UX Design",
-      "E-commerce",
-    ],
-    url: "https://www.dineoutdigital.com/",
   },
 ];

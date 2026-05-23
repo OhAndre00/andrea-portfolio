@@ -6,48 +6,58 @@ import { ProjectCard } from "./ProjectCard";
 import { projects } from "@/data/projects";
 
 export default function Projects() {
+  const labels = ["Web App", "Web3", "SaaS", "Product Design"];
+
   return (
     <section
       id="projects"
-      className="min-h-screen flex flex-col justify-start md:justify-center px-4 sm:px-6 py-8 relative overflow-hidden"
+      className="section-shell relative min-h-screen scroll-mt-24 overflow-hidden px-4 py-20 sm:px-6"
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-dark/50 to-dark" />
-
-      <div className="max-w-6xl mx-auto w-full relative z-10">
-        {/* TITLE */}
+      <div className="relative z-10 mx-auto w-full max-w-6xl">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-8"
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-120px" }}
+          transition={{ duration: 0.55 }}
+          className="mb-12"
         >
-          <h2
-            className="text-4xl sm:text-5xl md:text-6xl font-black mb-4 sm:mb-5"
-            style={{
-              background:
-                "linear-gradient(135deg, var(--purple-neon-strong) 0%, var(--blue-neon) 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              textShadow: "0 0 30px rgba(139, 92, 246, 0.4)",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            PROJECTS
-          </h2>
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="text-sm uppercase tracking-[0.2em] text-(--ink-2)">
+              Portfolio / Selected Work
+            </p>
+            <h2 className="mt-3 text-4xl font-extrabold sm:text-5xl md:text-6xl">
+              <span className="text-accent-gradient">Projects</span>
+            </h2>
 
-          <p className="text-gray-400/80 max-w-xl mx-auto text-sm sm:text-base">
-            A selection of real-world products and experiments built with modern
-            web and Web3 technologies.
-          </p>
+            <p className="mx-auto mt-4 max-w-2xl text-sm text-(--ink-1) sm:text-base">
+              From strategy to deployment, each project is built around real
+              goals, fast execution, and obsessive attention to user experience.
+            </p>
 
-          <div className="h-[2px] w-32 mx-auto mt-5 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full" />
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">
+              {labels.map((label) => (
+                <span
+                  key={label}
+                  className="rounded-full border border-white/20 bg-white/7 px-3 py-1 text-xs uppercase tracking-[0.12em] text-(--ink-1)"
+                >
+                  {label}
+                </span>
+              ))}
+            </div>
+
+            <div className="mx-auto mt-6 h-px w-40 bg-linear-to-r from-transparent via-(--accent-b)/70 to-transparent" />
+          </div>
         </motion.div>
 
-        {/* LIST - verticale su desktop, griglia su mobile? No, verticale su entrambi ma con card diversa */}
-        <div className="flex flex-col gap-8 md:gap-10">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
           {projects.map((project, i) => (
-            <ProjectCard key={project.title} {...project} delay={i * 0.1} />
+            <ProjectCard
+              key={project.title}
+              {...project}
+              index={i}
+              delay={i * 0.08}
+              featured={i === 0}
+            />
           ))}
         </div>
       </div>

@@ -2,13 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, MapPin, Mail, Phone, CheckCircle, Sparkles } from "lucide-react";
-import { JetBrains_Mono } from "next/font/google";
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
-});
+import { Send, MapPin, Mail, Phone, CheckCircle } from "lucide-react";
 
 interface FormData {
   name: string;
@@ -60,83 +54,69 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 py-20 overflow-hidden"
-      style={{ fontFamily: jetbrainsMono.style.fontFamily }}
+      className="section-shell relative flex min-h-screen scroll-mt-24 items-center justify-center overflow-hidden px-4 py-20 sm:px-6"
     >
-      {/* Background Effects migliorati */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-500/5 to-blue-500/5 rounded-full blur-3xl" />
-
-        {/* Griglia decorativa */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(139,92,246,0.03)_1px,transparent_1px),linear-gradient(to_right,rgba(59,130,246,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-      </div>
-
-      <div className="max-w-6xl w-full mx-auto relative z-10">
-        {/* TITLE con lo stesso stile delle altre sezioni */}
+      <div className="relative z-10 mx-auto w-full max-w-6xl">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12 md:mb-16"
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-120px" }}
+          transition={{ duration: 0.55 }}
+          className="mb-12 text-center md:mb-16"
         >
-          <h2
-            className="text-4xl sm:text-5xl md:text-6xl font-black mb-4 sm:mb-5"
-            style={{
-              background:
-                "linear-gradient(135deg, var(--purple-neon-strong) 0%, var(--blue-neon) 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              textShadow: "0 0 30px rgba(139, 92, 246, 0.4)",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            GET IN TOUCH
+          <p className="text-sm uppercase tracking-[0.2em] text-(--ink-2)">
+            Contact
+          </p>
+          <h2 className="mt-3 text-4xl font-extrabold sm:text-5xl md:text-6xl">
+            <span className="text-accent-gradient">Get In Touch</span>
           </h2>
 
-          <p className="text-gray-400/80 max-w-xl mx-auto text-sm sm:text-base">
-            Have a project in mind? Let's build something amazing together.
+          <p className="mx-auto mt-4 max-w-xl text-sm text-(--ink-1) sm:text-base">
+            If you want to build a project with strong identity and real
+            performance, let&apos;s talk.
           </p>
 
-          <div className="h-[2px] w-32 mx-auto mt-5 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full" />
+          <div className="mx-auto mt-6 h-px w-40 bg-linear-to-r from-transparent via-(--accent-a)/70 to-transparent" />
         </motion.div>
 
-        {/* Grid principale */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Contact Form - Stile card come i progetti */}
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-120px" }}
+            transition={{ duration: 0.55, delay: 0.1 }}
             className="group"
           >
-            <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 sm:p-8 hover:border-purple-500/30 transition-all duration-300 shadow-[0_0_25px_rgba(139,92,246,0.1)]">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
-                  <Send className="w-6 h-6 text-purple-300" />
+            <div className="glass-panel rounded-3xl p-6 shadow-[0_16px_36px_rgba(4,8,16,0.42)] sm:p-8">
+              <div className="mb-8 flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/20 bg-white/8">
+                  <Send className="h-6 w-6 text-(--accent-b)" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold">Send a Message</h3>
-                  <p className="text-sm text-gray-400">
-                    I'll respond within 24h
+                  <h3 className="text-xl font-semibold text-white">
+                    Send a Message
+                  </h3>
+                  <p className="text-sm text-(--ink-2)">
+                    Average response: 24h
                   </p>
                 </div>
               </div>
 
               {isSubmitted ? (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="text-center py-12"
+                  className="py-12 text-center"
                 >
-                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-green-500/20 flex items-center justify-center">
-                    <CheckCircle className="w-10 h-10 text-green-400" />
+                  <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-green-400/35 bg-green-500/15">
+                    <CheckCircle className="h-10 w-10 text-green-300" />
                   </div>
-                  <h4 className="text-xl font-semibold mb-2">Message Sent!</h4>
-                  <p className="text-gray-300 text-sm">
-                    Thanks for reaching out. I'll get back to you soon.
+                  <h4 className="mb-2 text-xl font-semibold text-white">
+                    Message sent
+                  </h4>
+                  <p className="text-sm text-(--ink-1)">
+                    I&apos;ll get back to you as soon as possible with all the
+                    details.
                   </p>
                 </motion.div>
               ) : (
@@ -144,9 +124,9 @@ export default function ContactSection() {
                   <div className="relative">
                     <label
                       htmlFor="name"
-                      className="block text-sm font-medium text-gray-300 mb-2"
+                      className="mb-2 block text-sm font-medium text-(--ink-1)"
                     >
-                      Your Name
+                      Name
                     </label>
                     <input
                       type="text"
@@ -157,27 +137,27 @@ export default function ContactSection() {
                       onFocus={() => setFocusedField("name")}
                       onBlur={() => setFocusedField(null)}
                       required
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none transition-all duration-300"
+                      className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-white outline-none transition-all duration-300"
                       style={{
                         borderColor:
                           focusedField === "name"
-                            ? "rgba(139, 92, 246, 0.5)"
+                            ? "rgba(62, 199, 162, 0.6)"
                             : "",
                         boxShadow:
                           focusedField === "name"
-                            ? "0 0 20px rgba(139, 92, 246, 0.2)"
+                            ? "0 0 0 1px rgba(62, 199, 162, 0.5), 0 0 24px rgba(62, 199, 162, 0.18)"
                             : "",
                       }}
-                      placeholder="John Doe"
+                      placeholder="Andrea"
                     />
                   </div>
 
                   <div className="relative">
                     <label
                       htmlFor="email"
-                      className="block text-sm font-medium text-gray-300 mb-2"
+                      className="mb-2 block text-sm font-medium text-(--ink-1)"
                     >
-                      Your Email
+                      Email
                     </label>
                     <input
                       type="email"
@@ -188,27 +168,27 @@ export default function ContactSection() {
                       onFocus={() => setFocusedField("email")}
                       onBlur={() => setFocusedField(null)}
                       required
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none transition-all duration-300"
+                      className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-white outline-none transition-all duration-300"
                       style={{
                         borderColor:
                           focusedField === "email"
-                            ? "rgba(59, 130, 246, 0.5)"
+                            ? "rgba(107, 184, 255, 0.65)"
                             : "",
                         boxShadow:
                           focusedField === "email"
-                            ? "0 0 20px rgba(59, 130, 246, 0.2)"
+                            ? "0 0 0 1px rgba(107, 184, 255, 0.55), 0 0 24px rgba(107, 184, 255, 0.2)"
                             : "",
                       }}
-                      placeholder="john@example.com"
+                      placeholder="name@email.com"
                     />
                   </div>
 
                   <div className="relative">
                     <label
                       htmlFor="message"
-                      className="block text-sm font-medium text-gray-300 mb-2"
+                      className="mb-2 block text-sm font-medium text-(--ink-1)"
                     >
-                      Your Message
+                      Message
                     </label>
                     <textarea
                       id="message"
@@ -219,15 +199,15 @@ export default function ContactSection() {
                       onBlur={() => setFocusedField(null)}
                       required
                       rows={5}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none transition-all duration-300 resize-none"
+                      className="w-full resize-none rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-white outline-none transition-all duration-300"
                       style={{
                         borderColor:
                           focusedField === "message"
-                            ? "rgba(139, 92, 246, 0.5)"
+                            ? "rgba(255, 209, 123, 0.7)"
                             : "",
                         boxShadow:
                           focusedField === "message"
-                            ? "0 0 20px rgba(139, 92, 246, 0.2)"
+                            ? "0 0 0 1px rgba(255, 209, 123, 0.5), 0 0 24px rgba(255, 209, 123, 0.18)"
                             : "",
                       }}
                       placeholder="Tell me about your project..."
@@ -237,10 +217,10 @@ export default function ContactSection() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full px-6 py-4 rounded-xl font-semibold cursor-pointer text-white bg-purple-600 hover:bg-purple-500 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-[rgba(62,199,162,0.55)] bg-[rgba(62,199,162,0.2)] px-6 py-3.5 font-semibold text-white transition-all duration-300 hover:border-[rgba(107,184,255,0.75)] hover:bg-[rgba(107,184,255,0.22)] disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {isSubmitting ? (
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/35 border-t-white" />
                     ) : (
                       "Send Message"
                     )}
@@ -250,72 +230,65 @@ export default function ContactSection() {
             </div>
           </motion.div>
 
-          {/* Contact Info - Stile migliorato */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="space-y-6"
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-120px" }}
+            transition={{ duration: 0.55, delay: 0.16 }}
+            className="space-y-5"
           >
-            {/* Contact Cards */}
-            <div className="grid gap-6">
-              {/* Email Card */}
-              <motion.a
-                href="mailto:andrea.seidita00@gmail.com"
-                className="group bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-6 hover:border-purple-500/30 transition-all duration-300"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/20 flex items-center justify-center">
-                    <Mail className="w-6 h-6 text-purple-300" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-400 mb-1">Email</p>
-                    <h4 className="font-medium text-white group-hover:text-purple-300 transition-colors break-all">
-                      andrea.seidita00@gmail.com
-                    </h4>
-                  </div>
+            <motion.a
+              href="mailto:andrea.seidita00@gmail.com"
+              className="glass-panel group block rounded-2xl p-6 transition-all duration-300 hover:border-[rgba(62,199,162,0.6)]"
+            >
+              <div className="flex items-center gap-4">
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-white/20 bg-white/8">
+                  <Mail className="h-6 w-6 text-(--accent-a)" />
                 </div>
-              </motion.a>
+                <div>
+                  <p className="mb-1 text-sm text-(--ink-2)">Email</p>
+                  <h4 className="break-all font-medium text-white">
+                    andrea.seidita00@gmail.com
+                  </h4>
+                </div>
+              </div>
+            </motion.a>
 
-              {/* Phone Card */}
-              <motion.a
-                href="tel:+393388727725"
-                className="group bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-6 hover:border-blue-500/30 transition-all duration-300"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center">
-                    <Phone className="w-6 h-6 text-blue-300" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-400 mb-1">Phone</p>
-                    <h4 className="font-medium text-white group-hover:text-blue-300 transition-colors">
-                      +39 338 872 7725
-                    </h4>
-                  </div>
+            <motion.a
+              href="tel:+393388727725"
+              className="glass-panel group block rounded-2xl p-6 transition-all duration-300 hover:border-[rgba(107,184,255,0.65)]"
+            >
+              <div className="flex items-center gap-4">
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-white/20 bg-white/8">
+                  <Phone className="h-6 w-6 text-(--accent-b)" />
                 </div>
-              </motion.a>
+                <div>
+                  <p className="mb-1 text-sm text-(--ink-2)">Phone</p>
+                  <h4 className="font-medium text-white">+39 338 872 7725</h4>
+                </div>
+              </div>
+            </motion.a>
 
-              {/* Location Card */}
-              <motion.div className="group bg-white/5 cursor-pointer backdrop-blur-lg border border-white/10 rounded-xl p-6 hover:border-purple-500/30 transition-all duration-300">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
-                    <MapPin className="w-6 h-6 text-purple-300" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-400 mb-1">Location</p>
-                    <h4 className="font-medium text-white">Based in Italy</h4>
-                    <p className="text-sm text-gray-400">Open to remote work</p>
-                  </div>
+            <div className="glass-panel rounded-2xl p-6">
+              <div className="flex items-center gap-4">
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-white/20 bg-white/8">
+                  <MapPin className="h-6 w-6 text-(--accent-c)" />
                 </div>
-              </motion.div>
+                <div>
+                  <p className="mb-1 text-sm text-(--ink-2)">Location</p>
+                  <h4 className="font-medium text-white">Italy</h4>
+                  <p className="text-sm text-(--ink-1)">Available remotely</p>
+                </div>
+              </div>
             </div>
 
-            {/* Quick Response Badge - senza animazioni hover */}
-            <div className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-xl p-6 backdrop-blur-lg">
-              <h4 className="font-semibold text-lg mb-2">Quick Response</h4>
-              <p className="text-sm text-gray-300 leading-relaxed">
-                I typically respond within 24 hours. For urgent matters, feel
-                free to reach out directly via email or phone.
+            <div className="rounded-2xl border border-white/15 bg-[linear-gradient(130deg,rgba(107,184,255,0.16),rgba(62,199,162,0.14))] p-6 backdrop-blur-xl">
+              <h4 className="mb-2 text-lg font-semibold text-white">
+                Quick Response
+              </h4>
+              <p className="text-sm leading-relaxed text-(--ink-1)">
+                For urgent requests, email or phone are the fastest channels.
+                For long-term collaborations, we can schedule an initial call.
               </p>
             </div>
           </motion.div>
