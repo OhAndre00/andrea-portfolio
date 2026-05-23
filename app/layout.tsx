@@ -2,7 +2,15 @@ import type { Metadata } from "next";
 import "./globals.css";
 import GradientMeshBackground from "@/components/GradientMeshBackground";
 import BackToTop from "@/components/BackToTop";
-import { JetBrains_Mono } from "next/font/google";
+import Navbar from "@/components/Navbar";
+import { JetBrains_Mono, Sora } from "next/font/google";
+
+const sora = Sora({
+  subsets: ["latin"],
+  variable: "--font-sora",
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
+});
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -31,43 +39,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={jetbrainsMono.variable}>
+    <html lang="en" className={`${sora.variable} ${jetbrainsMono.variable}`}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
       </head>
-      <body className="bg-dark text-white overflow-x-hidden antialiased">
+      <body className="text-white overflow-x-hidden antialiased">
+        <div className="noise-overlay" />
         <GradientMeshBackground />
+        <Navbar />
         <BackToTop />
-
         <main className="relative z-10">{children}</main>
-
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                // Font loading optimization
-                if ('fonts' in document) {
-                  await document.fonts.ready;
-                  sessionStorage.setItem('fonts-loaded', 'true');
-                }
-                
-                // Remove loading class
-                document.documentElement.classList.remove('loading');
-              } catch(e) {
-                console.log('Performance optimization:', e);
-              }
-            `,
-          }}
-        />
       </body>
     </html>
   );

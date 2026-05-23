@@ -3,20 +3,16 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUp } from "lucide-react";
-import { JetBrains_Mono } from "next/font/google";
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
-});
 
 export default function BackToTop() {
   const [visible, setVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Detect mobile
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -27,10 +23,8 @@ export default function BackToTop() {
       const rect = about.getBoundingClientRect();
 
       if (isMobile) {
-        // MOBILE → show only after About ends
         setVisible(rect.bottom < window.innerHeight * 0.3);
       } else {
-        // DESKTOP → normal behavior
         setVisible(window.scrollY > 300);
       }
     };
@@ -54,47 +48,18 @@ export default function BackToTop() {
         mass: 0.5,
       }}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="
-        fixed bottom-6 right-6 z-50
-        h-12 w-12 rounded-full flex items-center justify-center
-        cursor-pointer backdrop-blur-lg
-        group
-        transition-all duration-300
-        focus:outline-none focus:ring-2 focus:ring-purple-500/50
-      "
-      style={{ fontFamily: jetbrainsMono.style.fontFamily }}
+      className="fixed bottom-6 right-6 z-50 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/25 bg-[linear-gradient(130deg,rgba(255,255,255,0.12),rgba(255,255,255,0.06))] backdrop-blur-xl transition-all duration-300 group hover:border-[rgba(62,199,162,0.8)] focus:outline-none"
     >
-      {/* Background glow effect */}
-      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-500/20 to-blue-500/20 opacity-60 group-hover:opacity-80 transition-opacity duration-300 blur-md" />
+      <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(62,199,162,0.45),transparent_70%)] opacity-70 blur-sm transition-opacity duration-300 group-hover:opacity-100" />
 
-      {/* Main button */}
-      <div
-        className="
-        relative w-full h-full rounded-full
-        bg-gradient-to-br from-white/5 to-black/5
-        border border-white/20 group-hover:border-purple-400/40
-        flex items-center justify-center
-        shadow-lg shadow-black/20
-        transition-all duration-300
-      "
-      >
-        {/* Inner glow */}
-        <div className="absolute inset-0 rounded-full shadow-inner shadow-white/5" />
+      <ArrowUp
+        size={20}
+        className="relative transition-all duration-300 group-hover:-translate-y-0.5 group-hover:scale-110"
+        style={{ color: "var(--accent-b)" }}
+      />
 
-        {/* Icon */}
-        <ArrowUp
-          size={20}
-          className="
-            text-purple-300 group-hover:text-purple-200
-            transition-all duration-300
-            group-hover:scale-110
-          "
-        />
-      </div>
-
-      {/* Pulsing ring effect */}
       <motion.div
-        className="absolute inset-0 rounded-full border border-purple-400/30"
+        className="absolute inset-0 rounded-full border border-[rgba(107,184,255,0.35)]"
         animate={{
           scale: [1, 1.1, 1],
           opacity: [0.5, 0.8, 0.5],

@@ -1,7 +1,7 @@
 // components/ProjectModal.tsx
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { X, ExternalLink } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -73,32 +73,31 @@ export function ProjectModal({ isOpen, onClose, project }: Props) {
   if (!mounted || !isOpen) return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-      {/* Overlay oscurato */}
+    <div
+      className="project-modal fixed inset-0 flex items-center justify-center p-4"
+      style={{ zIndex: 9999 }}
+    >
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-md"
+        className="project-modal-backdrop absolute inset-0 bg-[#010204]/75 backdrop-blur-md"
         onClick={onClose}
       />
 
-      {/* Modal content */}
       <motion.div
         ref={modalRef}
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={{ opacity: 0, scale: 0.95, y: 10 }}
         animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.95 }}
+        exit={{ opacity: 0, scale: 0.95, y: 10 }}
         transition={{ duration: 0.2, ease: "easeOut" }}
-        className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl backdrop-blur-xl bg-white/10 border border-white/20 shadow-[0_0_30px_rgba(139,92,246,0.2)]"
+        className="relative max-h-[86vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-white/20 bg-[linear-gradient(170deg,rgba(255,255,255,0.1),rgba(255,255,255,0.04))] shadow-[0_26px_60px_rgba(3,8,16,0.7)] backdrop-blur-2xl"
       >
-        {/* Pulsante chiudi */}
         <button
           onClick={onClose}
-          className="absolute cursor-pointer top-4 right-4 z-10 p-2 rounded-full bg-black/60 backdrop-blur-sm text-white/80 hover:text-white hover:bg-black/80 transition-all duration-200"
+          className="absolute right-4 top-4 z-10 cursor-pointer rounded-full border border-white/20 bg-black/45 p-2 text-white/80 transition-all duration-200 hover:bg-black/75 hover:text-white"
         >
           <X className="w-5 h-5" />
         </button>
 
-        {/* Immagine */}
-        <div className="relative h-48 sm:h-56 w-full overflow-hidden rounded-t-2xl">
+        <div className="relative h-52 w-full overflow-hidden rounded-t-3xl sm:h-60">
           <Image
             src={project.image}
             alt={project.alt}
@@ -107,38 +106,45 @@ export function ProjectModal({ isOpen, onClose, project }: Props) {
             sizes="(max-width: 1024px) 100vw, 1024px"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to top, #05080f 0%, rgba(5,8,15,0.3) 40%, transparent 100%)",
+            }}
+          />
         </div>
 
-        {/* Contenuto */}
-        <div className="p-6 sm:p-8 bg-black/40 backdrop-blur-sm">
-          {/* Titolo */}
-          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+        <div className="project-modal-content bg-black/35 p-6 backdrop-blur-sm sm:p-8">
+          <h3 className="mb-4 text-2xl font-bold text-white sm:text-3xl">
             {project.title}
           </h3>
 
-          {/* Descrizione completa */}
           <div className="mb-6">
-            <h4 className="text-sm font-semibold text-purple-400 uppercase tracking-wider mb-2">
-              Descrizione
+            <h4
+              className="mb-2 text-sm font-semibold uppercase tracking-[0.14em]"
+              style={{ color: "var(--accent-b)" }}
+            >
+              Description
             </h4>
-            <p className="text-gray-200/90 leading-relaxed">
+            <p className="leading-relaxed" style={{ color: "var(--ink-1)" }}>
               {project.description}
             </p>
           </div>
 
-          {/* Tecnologie complete */}
           <div className="mb-8">
-            <h4 className="text-sm font-semibold text-purple-400 uppercase tracking-wider mb-3">
-              Tecnologie
+            <h4
+              className="mb-3 text-sm font-semibold uppercase tracking-[0.14em]"
+              style={{ color: "var(--accent-a)" }}
+            >
+              Technologies
             </h4>
             <div className="flex flex-wrap gap-2">
               {project.tech.map((tech) => (
                 <span
                   key={tech}
-                  className="px-3 py-1.5 text-sm rounded-full font-medium
-                    bg-white/15 border border-white/20
-                    text-gray-200 cursor-default"
+                  className="cursor-default rounded-full border border-white/20 bg-white/12 px-3 py-1.5 text-sm font-medium"
+                  style={{ color: "var(--ink-1)" }}
                 >
                   {tech}
                 </span>
@@ -146,14 +152,11 @@ export function ProjectModal({ isOpen, onClose, project }: Props) {
             </div>
           </div>
 
-          {/* Pulsante View Project */}
           <a
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white
-              bg-purple-600/90 hover:bg-purple-600
-              transition-all duration-300 shadow-lg"
+            className="inline-flex items-center gap-2 rounded-xl border border-[rgba(62,199,162,0.55)] bg-[rgba(62,199,162,0.18)] px-6 py-3 font-semibold text-white transition-all duration-300 hover:border-[rgba(107,184,255,0.7)] hover:bg-[rgba(107,184,255,0.18)]"
           >
             <span>View Project</span>
             <ExternalLink className="w-4 h-4" />

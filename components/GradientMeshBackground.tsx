@@ -1,16 +1,38 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
+
+type ThemeMode = "dark" | "light";
 
 export default function TechCubesBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
   const mountRef = useRef<HTMLDivElement>(null);
+  const [theme, setTheme] = useState<ThemeMode>("dark");
+
+  useEffect(() => {
+    const readTheme = () => {
+      const nextTheme =
+        document.documentElement.dataset.theme === "light" ? "light" : "dark";
+      setTheme(nextTheme);
+    };
+
+    readTheme();
+
+    const observer = new MutationObserver(readTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!mountRef.current) return;
 
-    // Setup Three.js
+    const isLightTheme = theme === "light";
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -28,27 +50,38 @@ export default function TechCubesBackground() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     mountRef.current.appendChild(renderer.domElement);
 
-    // Tech grid floor
-    const gridHelper = new THREE.GridHelper(35, 35, 0x8b5cf6, 0x3b82f6);
+    const isMobile = window.innerWidth < 768;
+
+    const gridHelper = new THREE.GridHelper(
+      35,
+      35,
+      isLightTheme ? 0x3d6ea8 : 0x6bb8ff,
+      isLightTheme ? 0x2ea586 : 0x3ec7a2,
+    );
     gridHelper.position.y = -6;
-    (gridHelper.material as THREE.Material).opacity = 0.06;
+    (gridHelper.material as THREE.Material).opacity = isMobile
+      ? isLightTheme
+        ? 0.07
+        : 0.03
+      : isLightTheme
+        ? 0.12
+        : 0.06;
     (gridHelper.material as THREE.Material).transparent = true;
     scene.add(gridHelper);
 
-    // Floating tech cubes
     const cubes: THREE.Mesh[] = [];
-    const cubeCount = 6;
+    const cubeCount = isMobile ? 4 : 6;
 
     for (let i = 0; i < cubeCount; i++) {
       const geometry = new THREE.BoxGeometry(0.8, 0.8, 0.8);
       const material = new THREE.MeshPhysicalMaterial({
-        color: i % 3 === 0 ? 0x8b5cf6 : i % 3 === 1 ? 0x3b82f6 : 0x2dd4bf,
+        color: i % 3 === 0 ? 0x3ec7a2 : i % 3 === 1 ? 0x6bb8ff : 0xffd17b,
         metalness: 0.7,
         roughness: 0.3,
         transparent: true,
-        opacity: 0.5,
-        emissive: i % 3 === 0 ? 0x8b5cf6 : i % 3 === 1 ? 0x3b82f6 : 0x2dd4bf,
-        emissiveIntensity: 0.1,
+        opacity: isLightTheme ? 0.62 : 0.5,
+        emissive: i % 3 === 0 ? 0x3ec7a2 : i % 3 === 1 ? 0x6bb8ff : 0xffd17b,
+        emissiveIntensity: isLightTheme ? 0.14 : 0.1,
       });
 
       const cube = new THREE.Mesh(geometry, material);
@@ -75,14 +108,19 @@ export default function TechCubesBackground() {
       cubes.push(cube);
     }
 
-    // 🎯 PARTICELLE PIÙ VISIBILI - MODIFICHE QUI
     const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 700; // ⭐ AUMENTATO da 600 a 700
+    const particlesCount = isMobile
+      ? isLightTheme
+        ? 380
+        : 300
+      : isLightTheme
+        ? 760
+        : 560;
 
     const posArray = new Float32Array(particlesCount * 3);
 
     for (let i = 0; i < particlesCount * 3; i++) {
-      posArray[i] = (Math.random() - 0.5) * 35; // ⭐ Leggermente più sparse
+      posArray[i] = (Math.random() - 0.5) * 35;
     }
 
     particlesGeometry.setAttribute(
@@ -91,11 +129,17 @@ export default function TechCubesBackground() {
     );
 
     const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.035,
-      color: 0xa855f7,
+      size: isLightTheme ? 0.05 : 0.032,
+      color: isLightTheme ? 0x2f5f93 : 0x8ec9ff,
       transparent: true,
-      opacity: 0.7,
-      blending: THREE.AdditiveBlending,
+      opacity: isMobile
+        ? isLightTheme
+          ? 0.68
+          : 0.4
+        : isLightTheme
+          ? 0.82
+          : 0.62,
+      blending: isLightTheme ? THREE.NormalBlending : THREE.AdditiveBlending,
       sizeAttenuation: true,
     });
 
@@ -108,7 +152,6 @@ export default function TechCubesBackground() {
     camera.position.z = 20;
     camera.position.y = 4;
 
-    // Mouse interaction
     let targetMouseX = 0;
     let targetMouseY = 0;
     let currentMouseX = 0;
@@ -121,7 +164,6 @@ export default function TechCubesBackground() {
 
     window.addEventListener("mousemove", handleMouseMove);
 
-    // Animation
     let animationId: number;
     const clock = new THREE.Clock();
 
@@ -132,7 +174,6 @@ export default function TechCubesBackground() {
       currentMouseX += (targetMouseX - currentMouseX) * 0.03;
       currentMouseY += (targetMouseY - currentMouseY) * 0.03;
 
-      // Animated cubes
       cubes.forEach((cube, i) => {
         const data = cube.userData;
 
@@ -147,12 +188,14 @@ export default function TechCubesBackground() {
         cube.rotation.z += data.rotationSpeed.z;
 
         const material = cube.material as THREE.MeshPhysicalMaterial;
+        const baseEmissive = isLightTheme ? 0.12 : 0.08;
+        const pulseEmissive = isLightTheme ? 0.06 : 0.04;
         material.emissiveIntensity =
-          0.08 + Math.sin(elapsedTime * 1.5 + i) * 0.04;
+          baseEmissive + Math.sin(elapsedTime * 1.5 + i) * pulseEmissive;
       });
 
-      particlesMesh.rotation.x = elapsedTime * 0.01; // ⭐ Più lento
-      particlesMesh.rotation.y = elapsedTime * 0.015; // ⭐ Più lento
+      particlesMesh.rotation.x = elapsedTime * 0.01;
+      particlesMesh.rotation.y = elapsedTime * 0.015;
 
       const positions = particlesGeometry.attributes.position
         .array as Float32Array;
@@ -174,7 +217,6 @@ export default function TechCubesBackground() {
 
     animate();
 
-    // Handle resize
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
@@ -183,7 +225,6 @@ export default function TechCubesBackground() {
 
     window.addEventListener("resize", handleResize);
 
-    // Cleanup
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
@@ -204,7 +245,7 @@ export default function TechCubesBackground() {
       particlesMaterial.dispose();
       (gridHelper.material as THREE.Material).dispose();
     };
-  }, []);
+  }, [theme]);
 
   return (
     <>
@@ -214,7 +255,8 @@ export default function TechCubesBackground() {
       />
       <div
         ref={mountRef}
-        className="fixed inset-0 -z-10 pointer-events-none opacity-70"
+        className="fixed inset-0 -z-10 pointer-events-none"
+        style={{ opacity: theme === "light" ? 0.95 : 0.72 }}
       />
     </>
   );

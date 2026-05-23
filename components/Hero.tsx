@@ -1,15 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Github, Linkedin, FileDown, ChevronDown } from "lucide-react";
-import Image from "next/image";
-import { JetBrains_Mono } from "next/font/google";
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
-});
+import {
+  Github,
+  Linkedin,
+  FileDown,
+  ArrowDownRight,
+  Activity,
+  Clock3,
+  MapPin,
+} from "lucide-react";
 
 interface HeroSectionProps {
   isLowHeight: boolean;
@@ -18,78 +19,29 @@ interface HeroSectionProps {
 interface SocialButtonProps {
   href: string;
   icon: React.ReactNode;
-  delay: number;
-  color: string;
-  hoverColor: string;
-  iconColor: string;
+  label: string;
 }
 
-function SocialButton({
-  href,
-  icon,
-  delay,
-  color,
-  hoverColor,
-  iconColor,
-}: SocialButtonProps) {
+function SocialButton({ href, icon, label }: SocialButtonProps) {
   return (
     <motion.a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={
-        href.includes("github")
-          ? "GitHub"
-          : href.includes("linkedin")
-            ? "LinkedIn"
-            : "Download CV"
-      }
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{
-        duration: 0.5,
-        delay,
-        type: "spring",
-        stiffness: 200,
-        damping: 15,
-      }}
-      whileHover={{ scale: 1.15, y: -3 }}
-      whileTap={{ scale: 0.95 }}
-      className="relative group"
+      aria-label={label}
+      whileHover={{ y: -4 }}
+      className="group inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2.5 text-sm font-medium text-white/90 transition-all duration-300 hover:border-[rgba(107,184,255,0.6)] hover:bg-white/10"
     >
-      {/* Background glow - fix per hover non desiderato durante scroll */}
-      <div
-        className={`absolute inset-0 rounded-full bg-gradient-to-br ${color} transition-all duration-300 blur-md group-hover:opacity-100 opacity-0 group-hover:${hoverColor}`}
-      />
-
-      {/* Button */}
-      <div
-        className={`
-        relative w-14 h-14 sm:w-16 sm:h-16 rounded-full backdrop-blur-lg
-        bg-white/5
-        border border-white/20
-        flex items-center justify-center
-        group-hover:border-white/40
-        shadow-xl
-        transition-all duration-300
-        group-hover:bg-white/10
-      `}
-      >
-        <div
-          className={`${iconColor} text-xl sm:text-2xl transition-transform duration-300 group-hover:scale-110`}
-        >
-          {icon}
-        </div>
+      <div className="text-(--accent-b) transition-transform duration-300 group-hover:scale-110">
+        {icon}
       </div>
+      <span className="tracking-wide">{label}</span>
     </motion.a>
   );
 }
 
 export default function HeroSection({ isLowHeight }: HeroSectionProps) {
   const heroRef = useRef<HTMLDivElement>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isScrolling, setIsScrolling] = useState(false);
-  const scrollTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -102,38 +54,6 @@ export default function HeroSection({ isLowHeight }: HeroSectionProps) {
     isLowHeight ? [1, 1] : [1, 0],
   );
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    const handleScrollStart = () => {
-      setIsScrolling(true);
-      if (scrollTimeout.current) {
-        clearTimeout(scrollTimeout.current);
-      }
-    };
-
-    const handleScrollEnd = () => {
-      scrollTimeout.current = setTimeout(() => {
-        setIsScrolling(false);
-      }, 150);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("scroll", handleScrollStart, { passive: true });
-    window.addEventListener("scroll", handleScrollEnd, { passive: true });
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("scroll", handleScrollStart);
-      window.removeEventListener("scroll", handleScrollEnd);
-      if (scrollTimeout.current) {
-        clearTimeout(scrollTimeout.current);
-      }
-    };
-  }, []);
-
   const handleExploreJourney = () => {
     document.querySelector("#about")?.scrollIntoView({
       behavior: "smooth",
@@ -141,185 +61,139 @@ export default function HeroSection({ isLowHeight }: HeroSectionProps) {
     });
   };
 
-  // Disabilita gli effetti hover durante lo scroll
-  const hoverProps = isScrolling
-    ? {}
-    : {
-        whileHover: { scale: 1.05 },
-      };
+  const handleViewProjects = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    document.querySelector("#projects")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
 
   return (
-    <>
-      {/* Cursor glow effect - disabilitato durante scroll per performance */}
-      {!isScrolling && (
-        <motion.div
-          className="fixed -z-10 w-[400px] h-[400px] rounded-full pointer-events-none"
-          animate={{ x: mousePosition.x - 200, y: mousePosition.y - 200 }}
-          transition={{
-            type: "spring",
-            stiffness: 150,
-            damping: 25,
-            mass: 0.5,
-          }}
-          style={{
-            background:
-              "radial-gradient(circle at center, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.1) 30%, transparent 70%)",
-            filter: "blur(120px)",
-            willChange: "transform",
-          }}
-        />
-      )}
-
-      {/* Main content */}
-      <motion.section
-        ref={heroRef}
-        style={!isLowHeight ? { opacity } : undefined}
-        className="
-          relative
-          min-h-screen
-          flex
-          items-center
-          justify-center
-          overflow-hidden
-        "
-      >
-        <div className="max-w-6xl w-full text-center relative z-10 px-4">
-          {/* Profile Image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
-            {...hoverProps}
-            className="flex justify-center relative mb-2 md:mb-4"
-          >
-            <div className="relative">
-              {/* Outline glow */}
-              <div className="absolute inset-[-4px] rounded-full bg-gradient-to-r from-purple-500 to-blue-500 opacity-30 blur-sm" />
-
-              {/* Outline principale */}
-              <div className="absolute inset-[-2px] rounded-full bg-gradient-to-r from-purple-400 to-blue-400" />
-
-              <div className="relative rounded-full overflow-hidden border-4 border-dark">
-                <Image
-                  src="/ohandre.jpg"
-                  width={200}
-                  height={200}
-                  alt="Andrea Icon"
-                  className="rounded-full object-cover w-[120px] h-[120px] sm:w-[140px] sm:h-[140px] md:w-[160px] md:h-[160px]"
-                  priority
-                />
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Title */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+    <motion.section
+      id="home"
+      ref={heroRef}
+      style={!isLowHeight ? { opacity } : undefined}
+      className="section-shell relative flex min-h-screen scroll-mt-24 items-center overflow-hidden px-4 py-16 sm:px-6 lg:px-8"
+    >
+      <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-14 lg:grid-cols-[1.2fr_0.8fr]">
+        <div>
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-6 md:mb-10"
+            transition={{ duration: 0.45 }}
+            className="mb-6 inline-flex items-center rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs uppercase tracking-[0.24em] text-white/80"
           >
-            <h1
-              className="cursor-default text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-tight"
-              style={{
-                fontFamily: jetbrainsMono.style.fontFamily,
-                background: "linear-gradient(135deg, #a855f7 0%, #3b82f6 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                textShadow: "0 0 30px rgba(139, 92, 246, 0.4)",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              ANDREA
-            </h1>
+            Full-Stack Developer
+          </motion.p>
 
-            {/* Tagline */}
-            <motion.p
-              className="text-lg cursor-default sm:text-xl md:text-2xl font-light px-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              style={{
-                fontFamily: jetbrainsMono.style.fontFamily,
-                color: "rgba(209, 213, 219, 0.8)",
-                letterSpacing: "0.03em",
-                lineHeight: 1.5,
-              }}
-            >
-              BUILDING THE FUTURE, ONE LINE OF CODE AT A TIME
-            </motion.p>
-          </motion.div>
-
-          {/* Social buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="flex justify-center gap-6 sm:gap-8 mb-8 md:mb-12"
+            transition={{ duration: 0.55, delay: 0.1 }}
+            className="text-balance text-5xl font-extrabold leading-[0.92] sm:text-6xl lg:text-7xl"
+          >
+            <span className="block text-white">Andrea Seidita</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.2 }}
+            className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-(--ink-1) sm:text-lg"
+          >
+            I build digital experiences around one clear rule: real performance,
+            strong visual identity, and clean UX. From backend to interactions,
+            I craft products that convert and stay memorable.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.36 }}
+            className="mt-8 flex flex-wrap items-center gap-3"
           >
             <SocialButton
               href="https://github.com/OhAndre00"
-              icon={<Github />}
-              color="from-purple-500/20 to-purple-600/20"
-              hoverColor="from-purple-500/40 to-purple-600/40"
-              iconColor="text-purple-300"
-              delay={0}
+              icon={<Github size={18} />}
+              label="GitHub"
             />
             <SocialButton
               href="https://www.linkedin.com/in/andrea-maria-seidita-9b513922b/"
-              icon={<Linkedin />}
-              color="from-blue-500/20 to-blue-600/20"
-              hoverColor="from-blue-500/40 to-blue-600/40"
-              iconColor="text-blue-300"
-              delay={0.1}
+              icon={<Linkedin size={18} />}
+              label="LinkedIn"
             />
             <SocialButton
               href="/MyCV.pdf"
-              icon={<FileDown />}
-              color="from-pink-500/20 to-rose-600/20"
-              hoverColor="from-pink-500/40 to-rose-600/40"
-              iconColor="text-pink-300"
-              delay={0.2}
+              icon={<FileDown size={18} />}
+              label="CV"
             />
           </motion.div>
 
-          {/* CTA Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
+          <motion.button
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.6 }}
-            whileHover={isScrolling ? {} : { scale: 1.03 }}
-            whileTap={isScrolling ? {} : { scale: 0.98 }}
+            transition={{ duration: 0.55, delay: 0.44 }}
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={handleExploreJourney}
+            className="mt-10 inline-flex items-center gap-3 cursor-pointer rounded-2xl border border-white/25 bg-white/10 px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:border-[rgba(62,199,162,0.7)] hover:bg-white/15"
           >
-            <button
-              onClick={handleExploreJourney}
-              className="group relative px-10 sm:px-12 py-4 sm:py-5 rounded-2xl cursor-pointer font-semibold overflow-hidden transition-all duration-300 mx-auto block focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            Explore My Journey
+            <ArrowDownRight size={18} className="text-(--accent-a)" />
+          </motion.button>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92, y: 14 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+          className="mx-auto w-full max-w-sm"
+        >
+          <div className="glass-panel overflow-hidden rounded-[2.2rem] p-5 shadow-[0_20px_50px_rgba(4,8,16,0.45)]">
+            <div
+              className="relative overflow-hidden rounded-[1.8rem] border border-white/20 p-5"
               style={{
-                fontFamily: jetbrainsMono.style.fontFamily,
-                letterSpacing: "0.08em",
+                backgroundColor: "var(--hero-panel-bg)",
+                backgroundImage:
+                  "radial-gradient(circle at -10% -10%, rgba(62, 199, 162, 0.35), transparent 45%), radial-gradient(circle at 110% 110%, rgba(107, 184, 255, 0.35), transparent 45%)",
               }}
             >
-              {/* Background gradient */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/10 to-blue-500/10" />
+              <div className="relative z-10">
+                <h3 className="mt-4 text-2xl font-semibold leading-tight text-white">
+                  Fast, reliable, and memorable digital experiences.
+                </h3>
 
-              {/* Border gradient */}
-              <div className="absolute inset-0 rounded-2xl border border-purple-500/30 transition-all duration-300 group-hover:border-purple-400/50" />
+                <p className="mt-3 text-sm leading-relaxed text-(--ink-1)">
+                  I work with startups and teams to turn ideas into real
+                  products, with a strong focus on UI/UX, performance, and
+                  conversion.
+                </p>
 
-              {/* Inner shadow */}
-              <div className="absolute inset-0 rounded-2xl shadow-inner shadow-black/20" />
+                <div className="mt-6 space-y-2.5 text-sm text-(--ink-1)">
+                  <div className="flex items-center gap-2.5 rounded-xl border border-white/12 bg-white/5 px-3 py-2.5">
+                    <MapPin size={16} className="text-(--accent-b)" />
+                    <span>Italy · Remote friendly</span>
+                  </div>
+                  <div className="flex items-center gap-2.5 rounded-xl border border-white/12 bg-white/5 px-3 py-2.5">
+                    <Clock3 size={16} className="text-(--accent-a)" />
+                    <span>Available for new projects</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-              <span className="relative z-10 text-white flex items-center justify-center gap-3 text-base sm:text-lg">
-                EXPLORE MY JOURNEY
-                <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-y-1" />
-              </span>
-
-              {/* Hover effect */}
-              <div className="absolute inset-0 opacity-0 transition-opacity duration-300 bg-gradient-to-r from-purple-500/5 to-blue-500/5 group-hover:opacity-100" />
-            </button>
-          </motion.div>
-        </div>
-      </motion.section>
-    </>
+            <a
+              href="#projects"
+              onClick={handleViewProjects}
+              className="mt-4 inline-flex w-full items-center justify-between rounded-xl border border-white/20 bg-white/7 px-4 py-3 text-sm font-medium text-white transition-colors duration-300 hover:border-[rgba(107,184,255,0.55)] hover:bg-white/12"
+            >
+              View Projects
+              <ArrowDownRight size={16} className="text-(--accent-b)" />
+            </a>
+          </div>
+        </motion.div>
+      </div>
+    </motion.section>
   );
 }
