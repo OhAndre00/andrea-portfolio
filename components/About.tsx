@@ -77,7 +77,7 @@ export default function About() {
           </p>
           <h2 className="mt-4 text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl">
             <span className="text-accent-gradient">
-              From UX to backend in one flow
+              From UX to Backend in one flow
             </span>
           </h2>
           <p className="mt-5 max-w-3xl text-base leading-relaxed text-(--ink-1) sm:text-lg">
