@@ -173,7 +173,7 @@ export default function HeroSection({ isLowHeight }: HeroSectionProps) {
                 <div className="mt-6 space-y-2.5 text-sm text-(--ink-1)">
                   <div className="flex items-center gap-2.5 rounded-xl border border-white/12 bg-white/5 px-3 py-2.5">
                     <MapPin size={16} className="text-(--accent-b)" />
-                    <span>Italy · Remote friendly</span>
+                    <span>Italy · Remote Friendly</span>
                   </div>
                   <div className="flex items-center gap-2.5 rounded-xl border border-white/12 bg-white/5 px-3 py-2.5">
                     <Clock3 size={16} className="text-(--accent-a)" />
