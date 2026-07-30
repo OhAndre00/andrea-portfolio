@@ -56,7 +56,6 @@ export default function Projects() {
               {...project}
               index={i}
               delay={i * 0.08}
-              featured={i === 0}
             />
           ))}
         </div>
